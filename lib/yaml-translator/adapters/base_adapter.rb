@@ -1,8 +1,8 @@
 module YamlTranslator
   module Adapters
-    class NoopAdaptor < BaseAdapter
+    class BaseAdapter
       def translate(values)
-        values
+        raise 'Translation processing is not implemented'
       end
     end
   end
