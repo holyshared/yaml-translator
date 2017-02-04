@@ -11,8 +11,8 @@ module YamlTranslator
     #
     # @param [Hash] values Hash of translate target
     # @return [Hash] translated hash
-    def translate(values)
-      rebuild(translate_tree(flatten(values)))
+    def translate(values, to)
+      rebuild(translate_tree(flatten(values), to))
     end
 
     private
@@ -21,8 +21,8 @@ module YamlTranslator
     #
     # @param [Hash] values Hash of translate target
     # @return [Hash] translated hash
-    def translate_tree(values)
-      @adapter.translate(values)
+    def translate_tree(values, options={})
+      @adapter.translate(values, options)
     end
 
     # Returning the flattened structure to the tree structure
