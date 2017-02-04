@@ -57,8 +57,7 @@ module YamlTranslator
       values.each_with_index do |(i, v)|
         @path.move_to(i)
         if v.is_a?(Hash)
-          result[@path.to_s] ||= {}
-          result[@path.to_s].merge!(translate_tree(v))
+          result.merge!(flatten(v))
         else
           result[@path.to_s] = v
         end
