@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/yaml-translator.svg)](https://badge.fury.io/rb/yaml-translator)
 [![Build Status](https://travis-ci.org/holyshared/yaml-translator.svg?branch=master)](https://travis-ci.org/holyshared/yaml-translator)
 [![Coverage Status](https://coveralls.io/repos/github/holyshared/yaml-translator/badge.svg?branch=master)](https://coveralls.io/github/holyshared/yaml-translator?branch=master)
+[![Code Climate](https://codeclimate.com/github/holyshared/yaml-translator/badges/gpa.svg)](https://codeclimate.com/github/holyshared/yaml-translator)
 
 # Basic usage
 
