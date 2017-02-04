@@ -10,9 +10,18 @@ module YamlTranslator
     # Translate target
     #
     # @param [Hash] values Hash of translate target
-    # @return [Hash] translated hash
+    # @return [TranslatedResult] translated result
     def translate(values, options={})
       TranslatedResult.new(rebuild(translate_tree(flatten(values), options)), options[:to])
+    end
+
+    # Translate target file
+    #
+    # @param [Hash] file YAML file of translate target
+    # @return [TranslatedResult] translated result
+    def translate_file(file, options={})
+      yaml = YAML.load(File.open(file, &:read))
+      translate(yaml)
     end
 
     private

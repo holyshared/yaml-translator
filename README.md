@@ -15,10 +15,10 @@ require 'yaml-translator'
 
 adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
 
-yaml = YAML.load(File.open("#{dir}/en.yml", &:read))
+yaml = "#{dir}/en.yml"
 translator = ::YamlTranslator::Translator.new(adapter)
 
-result = translator.translate(yaml, to: :ja)
+result = translator.translate_file(yaml, to: :ja)
 result.save_to('/path/to/directory') # Write a ja.yml
 result.save # Write a ja.yml (current directory)
 ```
