@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yaml-translator (0.1.1)
+    yaml-translator (0.1.2)
       easy_translate
 
 GEM
