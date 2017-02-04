@@ -20,10 +20,10 @@ translator = ::YamlTranslator::Translator.new(adapter)
 
 result = translator.translate(yaml, to: :ja)
 result.save_to('/path/to/directory') # Write a ja.yml
+result.save # Write a ja.yml (current directory)
 ```
 
 ## Run the test
 
 	bundle install
 	rake spec
-
