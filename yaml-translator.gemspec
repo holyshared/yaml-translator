@@ -4,26 +4,27 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'yaml-translator/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "yaml-translator"
+  spec.name          = 'yaml-translator'
   spec.version       = YamlTranslator::VERSION
-  spec.authors       = ["Noritaka Horio"]
-  spec.email         = ["holy.shared.design@gmail.com"]
-  spec.summary       = ""
-  spec.description   = ""
-  spec.homepage      = "https://github.com/holyshared/yaml-translator"
-  spec.license       = "MIT"
+  spec.authors       = ['Noritaka Horio']
+  spec.email         = ['holy.shared.design@gmail.com']
+  spec.summary       = ''
+  spec.description   = ''
+  spec.homepage      = 'https://github.com/holyshared/yaml-translator'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
   spec.add_dependency 'easy_translate'
 
-  spec.add_development_dependency "bundler", "~> 1.0"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "simplecov-console"
-  spec.add_development_dependency "coveralls"
+  spec.add_development_dependency 'bundler', '~> 1.0'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov-console'
+  spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'rspec-temp_dir'
 end

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yaml-translator (0.1.0)
+    yaml-translator (0.1.1)
       easy_translate
 
 GEM
@@ -42,6 +42,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    rspec-temp_dir (1.0.0)
+      rspec (>= 3.0)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -66,6 +68,7 @@ DEPENDENCIES
   coveralls
   rake (~> 10.0)
   rspec
+  rspec-temp_dir
   simplecov
   simplecov-console
   yaml-translator!
