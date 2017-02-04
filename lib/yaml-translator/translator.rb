@@ -11,8 +11,8 @@ module YamlTranslator
     #
     # @param [Hash] values Hash of translate target
     # @return [Hash] translated hash
-    def translate(values, to)
-      rebuild(translate_tree(flatten(values), to))
+    def translate(values, options={})
+      TranslatedResult.new(rebuild(translate_tree(flatten(values), options)), options[:to])
     end
 
     private

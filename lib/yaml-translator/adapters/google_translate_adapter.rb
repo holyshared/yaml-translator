@@ -2,8 +2,8 @@ require 'easy_translate'
 
 module YamlTranslator
   module Adapters
-    class GoogleTranslateAdaptor < BaseAdapter
-      def initialize(api_key: nil)
+    class GoogleTranslateAdapter < BaseAdapter
+      def initialize(api_key=nil)
         @api_key = api_key
       end
       def translate(values, options={})
