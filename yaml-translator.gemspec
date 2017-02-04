@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = YamlTranslator::VERSION
   spec.authors       = ['Noritaka Horio']
   spec.email         = ['holy.shared.design@gmail.com']
-  spec.summary       = ''
-  spec.description   = ''
+  spec.summary       = %q{Translate for the locales configuration file}
+  spec.description   = %q{Translate for the locales configuration file}
   spec.homepage      = 'https://github.com/holyshared/yaml-translator'
   spec.license       = 'MIT'
 
