@@ -1,19 +1,34 @@
+require "yaml-translator/adapters"
+
 module YamlTranslator
   class Translator
-    def initialize
+    def initialize(adapter = Adapters::NoopAdaptor.new)
       @path = KeyPath.new
+      @adapter = adapter
     end
 
+    # Translate target
+    #
+    # @param [Hash] values Hash of translate target
+    # @return [Hash] translated hash
     def translate(values)
       rebuild(translate_tree(flatten(values)))
     end
 
     private
 
+    # Translate target
+    #
+    # @param [Hash] values Hash of translate target
+    # @return [Hash] translated hash
     def translate_tree(values)
-      values
+      @adapter.translate(values)
     end
 
+    # Returning the flattened structure to the tree structure
+    #
+    # @param [Hash] values flatten Hash
+    # @return [Hash] translated hash
     def rebuild(values)
       result = {}
       current = result
@@ -34,6 +49,9 @@ module YamlTranslator
       result
     end
 
+    # Covert to a flat hash
+    # @param [Hash] values flatten target
+    # @return [Hash]
     def flatten(values)
       result = {}
       values.each_with_index do |(i, v)|
