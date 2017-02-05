@@ -10,6 +10,19 @@ describe YamlTranslator::Locale do
   let(:output_file) { File.join(tmp_dir, 'en.yml') }
   let(:file_exist) { File.exist?(output_file) }
 
+  describe '#flatten_hash' do
+    let(:flatten_hash) do
+      {
+        'en.bar' => 'bar',
+        'en.foo'=> 'foo',
+        'en.foo1.foo1' => 'foo1-1',
+        'en.foo1.foo2' => 'foo1-2'
+      }
+    end
+    it 'should be return flatten hash' do
+      expect(locale.flatten_hash).to eq(flatten_hash)
+    end
+  end
   describe '#to_s' do
     it 'should be return yaml formatted string' do
       expect(locale.to_s).to eq(lang_file_content)

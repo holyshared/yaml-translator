@@ -17,6 +17,10 @@ module YamlTranslator
       save(dir)
     end
 
+    def flatten_hash
+      flatten(values)
+    end
+
     def to_s
       YAML.dump(values)
     end
@@ -30,6 +34,21 @@ module YamlTranslator
     end
 
     private
+
+    # Covert to a flatten hash
+    def flatten(values={}, path=KeyPath.new)
+      result = {}
+      values.each_with_index do |(i, v)|
+        path.move_to(i)
+        if v.is_a?(Hash)
+          result.merge!(flatten(v, path))
+        else
+          result[path.to_s] = v
+        end
+        path.leave
+      end
+      result
+    end
 
     def write_file(file_path)
       File.write(file_path, to_s)
