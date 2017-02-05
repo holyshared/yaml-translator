@@ -3,36 +3,19 @@ require "yaml-translator/adapters"
 module YamlTranslator
   class Translator
     def initialize(adapter = Adapters::NoopAdaptor.new)
-      @path = KeyPath.new
       @adapter = adapter
     end
 
     # Translate target
     #
-    # @param [Hash] values Hash of translate target
-    # @return [TranslatedResult] translated result
-    def translate(values, options={})
-      TranslatedResult.new(rebuild(translate_tree(flatten(values), options)), options[:to])
-    end
-
-    # Translate target file
-    #
-    # @param [Hash] file YAML file of translate target
-    # @return [TranslatedResult] translated result
-    def translate_file(file, options={})
-      yaml = YAML.load(File.open(file, &:read))
-      translate(yaml)
+    # @param [Locale] locale of translate target
+    # @return [Locale] locale
+    def translate(locale, options={})
+      translated = @adapter.translate(locale.flatten_hash, options)
+      Locale.new(rebuild(translated), options[:to])
     end
 
     private
-
-    # Translate target
-    #
-    # @param [Hash] values Hash of translate target
-    # @return [Hash] translated hash
-    def translate_tree(values, options={})
-      @adapter.translate(values, options)
-    end
 
     # Returning the flattened structure to the tree structure
     #
@@ -54,23 +37,6 @@ module YamlTranslator
         end
         current[last_key] = v
         current = result
-      end
-      result
-    end
-
-    # Covert to a flat hash
-    # @param [Hash] values flatten target
-    # @return [Hash]
-    def flatten(values)
-      result = {}
-      values.each_with_index do |(i, v)|
-        @path.move_to(i)
-        if v.is_a?(Hash)
-          result.merge!(flatten(v))
-        else
-          result[@path.to_s] = v
-        end
-        @path.leave
       end
       result
     end

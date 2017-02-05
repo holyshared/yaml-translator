@@ -9,6 +9,10 @@ module YamlTranslator
       @values = values
     end
 
+    def translate(translator, options={})
+      translator.do_translate(self, options)
+    end
+
     def save(dir=Dir.pwd)
       write_file(File.join(dir, "#{lang}.yml"))
     end
