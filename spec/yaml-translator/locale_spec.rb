@@ -10,6 +10,21 @@ describe YamlTranslator::Locale do
   let(:output_file) { File.join(tmp_dir, 'en.yml') }
   let(:file_exist) { File.exist?(output_file) }
 
+  describe '#diff' do
+    let(:before_locale) { load_locale('diff/before/en') }
+    let(:after_locale) { load_locale('diff/after/en') }
+    let(:flatten_hash) do
+      {
+        'en.foo1.foo3' => 'foo1-3'
+      }
+    end
+    it 'should be return flatten hash' do
+      diff_locale = before_locale.diff(after_locale)
+      expect(diff_locale.lang).to eq('en')
+      expect(diff_locale.flatten_hash).to eq(flatten_hash)
+    end
+  end
+
   describe '#flatten_hash' do
     let(:flatten_hash) do
       {
