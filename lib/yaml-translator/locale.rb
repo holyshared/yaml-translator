@@ -1,4 +1,5 @@
 require 'yaml'
+require 'diff/lcs'
 
 module YamlTranslator
   class Locale
@@ -11,6 +12,18 @@ module YamlTranslator
 
     def translate(translator, options={})
       translator.translate(self, options)
+    end
+
+    def diff(other)
+      before_seq = flatten_hash.map { |k, v| "#{k}: #{v}" }
+      after_seq = other.flatten_hash.map { |k, v| "#{k}: #{v}" }
+      diffs = Diff::LCS.diff(before_seq, after_seq).flatten.map do |operation|
+        type, position, element = *operation
+        next if type == '-'
+        key, text = *element.split(':')
+        [key, text.strip]
+      end
+      Locale.new(Hash[diffs.compact], lang)
     end
 
     def save(dir=Dir.pwd)
