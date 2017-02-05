@@ -1,5 +1,8 @@
 # yaml-translator
 
+yaml-translator is a gem that translates yaml format translation files into each language.  
+The translation method supports google translate api in built-in.
+
 [![Gem Version](https://badge.fury.io/rb/yaml-translator.svg)](https://badge.fury.io/rb/yaml-translator)
 [![Build Status](https://travis-ci.org/holyshared/yaml-translator.svg?branch=master)](https://travis-ci.org/holyshared/yaml-translator)
 [![Coverage Status](https://coveralls.io/repos/github/holyshared/yaml-translator/badge.svg?branch=master)](https://coveralls.io/github/holyshared/yaml-translator?branch=master)
@@ -10,17 +13,20 @@
 Translate the language file, do as follows.
 
 ```ruby
-require 'yaml'
-require 'yaml-translator'
-
+dir = File.dirname(__FILE__)
 adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
-
-yaml = "#{dir}/en.yml"
 translator = ::YamlTranslator::Translator.new(adapter)
 
-result = translator.translate_file(yaml, to: :ja)
-result.save_to('/path/to/directory') # Write a ja.yml
-result.save # Write a ja.yml (current directory)
+english_locale = ::YamlTranslator::Locale.load_file("#{dir}/en.yml")
+japanese_locale = english_locale.translate(translator, to: :ja)
+
+p japanese_locale.to_s # convert to japanese locale yaml format
+p japanese_locale.save_to(dir) # Write a ja.yml
+
+german_locale = english_locale.translate(translator, to: :de)
+
+p german_locale.to_s # convert to german locale yaml format
+p german_locale.save_to(dir) # Write a de.yml
 ```
 
 ## Run the test
