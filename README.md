@@ -17,7 +17,7 @@ dir = File.dirname(__FILE__)
 adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
 translator = ::YamlTranslator::Translator.new(adapter)
 
-english_locale = ::YamlTranslator::Locale.load_file("#{dir}/en.yml")
+english_locale = ::YamlTranslator.load_file("#{dir}/en.yml")
 japanese_locale = english_locale.translate(translator, to: :ja)
 
 p japanese_locale.to_s # convert to japanese locale yaml format
@@ -37,8 +37,8 @@ The method of translating the difference is as follows.
 adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
 translator = ::YamlTranslator::Translator.new(adapter)
 
-before_english_locale = ::YamlTranslator::Locale.load_file("/path/to/before/en.yml")
-after_english_locale = ::YamlTranslator::Locale.load_file("/path/to/after/en.yml")
+before_english_locale = ::YamlTranslator.load_file("/path/to/before/en.yml")
+after_english_locale = ::YamlTranslator.load_file("/path/to/after/en.yml")
 
 diff_locale = before_english_locale.diff(after_english_locale)
 diff_japanese_locale = diff_locale.translate(translator, to: :ja)
