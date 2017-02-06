@@ -13,7 +13,7 @@ describe YamlTranslator::Locale do
   describe '#diff' do
     let(:before_locale) { load_locale('diff/before/en') }
     let(:after_locale) { load_locale('diff/after/en') }
-    let(:flatten_hash) do
+    let(:single_key_hash) do
       {
         'en.foo1.foo3' => 'foo1-3'
       }
@@ -21,12 +21,12 @@ describe YamlTranslator::Locale do
     it 'should be return flatten hash' do
       diff_locale = before_locale.diff(after_locale)
       expect(diff_locale.lang).to eq('en')
-      expect(diff_locale.flatten_hash).to eq(flatten_hash)
+      expect(diff_locale.to_single_key_hash).to eq(single_key_hash)
     end
   end
 
-  describe '#flatten_hash' do
-    let(:flatten_hash) do
+  describe '#to_single_key_hash' do
+    let(:single_key_hash) do
       {
         'en.bar' => 'bar',
         'en.foo'=> 'foo',
@@ -35,7 +35,7 @@ describe YamlTranslator::Locale do
       }
     end
     it 'should be return flatten hash' do
-      expect(locale.flatten_hash).to eq(flatten_hash)
+      expect(locale.to_single_key_hash).to eq(single_key_hash)
     end
   end
   describe '#to_s' do
