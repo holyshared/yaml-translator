@@ -3,6 +3,7 @@ require 'diff/lcs'
 
 module YamlTranslator
   class Locale
+
     attr_reader :lang, :values
 
     def initialize(values, lang)
@@ -15,15 +16,21 @@ module YamlTranslator
     end
 
     def diff(other)
-      before_seq = flatten_hash.map { |k, v| "#{k}: #{v}" }
-      after_seq = other.flatten_hash.map { |k, v| "#{k}: #{v}" }
+      before_seq = to_single_key_hash.map { |k, v| "#{k}: #{v}" }
+      after_seq = other.to_single_key_hash.map { |k, v| "#{k}: #{v}" }
       diffs = Diff::LCS.diff(before_seq, after_seq).flatten.map do |operation|
         type, position, element = *operation
         next if type == '-'
         key, text = *element.split(':')
         [key, text.strip]
       end
-      Locale.new(Hash[diffs.compact], lang)
+      single_key_hash = Hash[diffs.compact]
+      Locale.new(single_key_hash.to_tree, lang)
+    end
+
+    def merge(locale)
+      merged = flatten_hash.merge(locale.flatten_hash)
+      Locale.new(merged.to_tree, lang)
     end
 
     def save(dir=Dir.pwd)
@@ -34,8 +41,8 @@ module YamlTranslator
       save(dir)
     end
 
-    def flatten_hash
-      flatten(values)
+    def to_single_key_hash
+      values.to_single_key
     end
 
     def to_s
@@ -51,21 +58,6 @@ module YamlTranslator
     end
 
     private
-
-    # Covert to a flatten hash
-    def flatten(values={}, path=KeyPath.new)
-      result = {}
-      values.each_with_index do |(i, v)|
-        path.move_to(i)
-        if v.is_a?(Hash)
-          result.merge!(flatten(v, path))
-        else
-          result[path.to_s] = v
-        end
-        path.leave
-      end
-      result
-    end
 
     def write_file(file_path)
       File.write(file_path, to_s)
