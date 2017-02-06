@@ -23,7 +23,12 @@ module YamlTranslator
         key, text = *element.split(':')
         [key, text.strip]
       end
-      Locale.new(Hash[diffs.compact], lang)
+      Locale.new(rebuild(Hash[diffs.compact]), lang)
+    end
+
+    def merge(locale)
+      merged = flatten_hash.merge(locale.flatten_hash)
+      Locale.new(rebuild(merged), lang)
     end
 
     def save(dir=Dir.pwd)
@@ -63,6 +68,30 @@ module YamlTranslator
           result[path.to_s] = v
         end
         path.leave
+      end
+      result
+    end
+
+    # Returning the flattened structure to the tree structure
+    #
+    # @param [Hash] values flatten Hash
+    # @return [Hash] translated hash
+    def rebuild(values)
+      result = {}
+      current = result
+      values.each do |k, v|
+        keys = k.split('.')
+        last_key = keys.pop
+        keys.each do |ks|
+          current = if current.key?(ks)
+                      current[ks]
+                    else
+                      current[ks] = {}
+                      current[ks]
+                    end
+        end
+        current[last_key] = v
+        current = result
       end
       result
     end
