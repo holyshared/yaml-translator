@@ -7,6 +7,10 @@ require 'yaml-translator/adapters'
 
 module YamlTranslator
   class << self
+    def load(s)
+      Locale.load(s)
+    end
+
     def load_file(file)
       Locale.load_file(file)
     end

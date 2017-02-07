@@ -10,6 +10,13 @@ describe YamlTranslator::Locale do
   let(:output_file) { File.join(tmp_dir, 'en.yml') }
   let(:file_exist) { File.exist?(output_file) }
 
+  describe '#load' do
+    it 'should be load from string' do
+      locale = YamlTranslator::Locale.load(lang_file_content)
+      expect(locale.lang).to eq('en')
+    end
+  end
+
   describe '#diff' do
     let(:before_locale) { load_locale('diff/before/en') }
     let(:after_locale) { load_locale('diff/after/en') }

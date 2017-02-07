@@ -50,10 +50,14 @@ module YamlTranslator
     end
 
     class << self
-      def load_file(file)
-        lang = File.basename(file).gsub(/.(yml|yaml)/, '')
-        yaml = YAML.load(File.open(file, &:read))
+      def load(s)
+        yaml = YAML.load(s)
+        lang = yaml.keys.first # FIXME check support language
         self.new(yaml, lang)
+      end
+
+      def load_file(file)
+        load(File.open(file, &:read))
       end
     end
 
