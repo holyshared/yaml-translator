@@ -15,5 +15,13 @@ module YamlTranslator
       translated = @adapter.translate(locale.to_single_key_hash, options)
       Locale.new(translated.to_tree, options[:to])
     end
+
+    def string(s)
+      StringContext.new(Locale.load(s), self)
+    end
+
+    def file(f)
+      FileContext.new(Locale.load_file(f), self)
+    end
   end
 end
