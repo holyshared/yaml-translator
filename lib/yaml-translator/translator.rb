@@ -13,7 +13,12 @@ module YamlTranslator
     # @return [Locale] locale
     def translate(locale, options={})
       translated = @adapter.translate(locale.to_single_key_hash, options)
-      Locale.new(translated.to_tree, options[:to])
+      translated_tree = translated.to_tree
+
+      result = {}
+      result[options[:to].to_s] = translated_tree[locale.lang]
+
+      Locale.new(result, options[:to])
     end
 
     def string(s)
