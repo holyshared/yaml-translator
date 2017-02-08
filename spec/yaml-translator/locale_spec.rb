@@ -45,6 +45,22 @@ describe YamlTranslator::Locale do
       expect(locale.to_single_key_hash).to eq(single_key_hash)
     end
   end
+
+  describe '#merge_to_file' do
+    let(:merge_target_file) { File.join(File.dirname(__FILE__), '/../fixtures/merge_target.yml') }
+    it 'should be merge to yaml file' do
+      merged = locale.merge_to_file(merge_target_file)
+      expect(merged.values['en']['target']).to eq('bar')
+    end
+  end
+
+  describe '#merge_to_s' do
+    it 'should be merge to yaml formatted string' do
+      merged = locale.merge_to_s("---\nen:\n  merge_to_s: ok?")
+      expect(merged.values['en']['merge_to_s']).to eq('ok?')
+    end
+  end
+
   describe '#to_s' do
     it 'should be return yaml formatted string' do
       expect(locale.to_s).to eq(lang_file_content)

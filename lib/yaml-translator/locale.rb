@@ -29,8 +29,23 @@ module YamlTranslator
     end
 
     def merge(locale)
-      merged = flatten_hash.merge(locale.flatten_hash)
-      Locale.new(merged.to_tree, lang)
+      s = to_single_key_hash
+      o = locale.to_single_key_hash
+      Locale.new(s.merge(o).to_tree, lang)
+    end
+
+    def merge_to(locale)
+      locale.merge(self)
+    end
+
+    def merge_to_file(file)
+      target_locale = Locale.load_file(file)
+      target_locale.merge(self)
+    end
+
+    def merge_to_s(s)
+      target_locale = Locale.load(s)
+      target_locale.merge(self)
     end
 
     def save(dir=Dir.pwd)
