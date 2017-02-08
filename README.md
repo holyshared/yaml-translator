@@ -35,16 +35,12 @@ p german_locale.save_to(dir) # Write a de.yml
 The method of translating the difference is as follows.
 
 ```ruby
+dir = File.dirname(__FILE__)
 adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
 translator = ::YamlTranslator::Translator.new(adapter)
 
-before_english_locale = ::YamlTranslator.load_file("/path/to/before/en.yml")
-after_english_locale = ::YamlTranslator.load_file("/path/to/after/en.yml")
-
-diff_locale = before_english_locale.diff(after_english_locale)
-diff_japanese_locale = diff_locale.translate(translator, to: :ja)
-
-diff_japanese_locale.save # Save the difference translation file
+diff_locale = translator.file("/path/to/before/en.yml").diff("/path/to/after/en.yml")
+diff_locale.to(:ja).save
 ```
 
 ## Run the test

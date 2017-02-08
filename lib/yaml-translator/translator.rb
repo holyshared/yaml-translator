@@ -17,11 +17,11 @@ module YamlTranslator
     end
 
     def string(s)
-      Context.new(Locale.load(s), self)
+      StringContext.new(Locale.load(s), self)
     end
 
     def file(f)
-      Context.new(Locale.load_file(f), self)
+      FileContext.new(Locale.load_file(f), self)
     end
   end
 end
