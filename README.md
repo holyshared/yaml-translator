@@ -14,9 +14,11 @@ The method of translating the language file is as follows.
 
 ```ruby
 dir = File.dirname(__FILE__)
-adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
-translator = ::YamlTranslator::Translator.new(adapter)
 
+translator = ::YamlTranslator.create(
+  :google_translate,
+  api_key: ENV['GOOGLE_TRANSLATE_API_KEY']
+)
 
 english_locale = translator.file("#{dir}/en.yml")
 japanese_locale = english_locale.to(:ja)
@@ -36,8 +38,11 @@ The method of translating the difference is as follows.
 
 ```ruby
 dir = File.dirname(__FILE__)
-adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
-translator = ::YamlTranslator::Translator.new(adapter)
+
+translator = ::YamlTranslator.create(
+  :google_translate,
+  api_key: ENV['GOOGLE_TRANSLATE_API_KEY']
+)
 
 diff_locale = translator.file("/path/to/before/en.yml").diff("/path/to/after/en.yml")
 diff_locale.to(:ja).save
