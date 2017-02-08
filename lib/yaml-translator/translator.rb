@@ -3,7 +3,7 @@ require "yaml-translator/adapters"
 module YamlTranslator
   class Translator
 
-    def initialize(adapter = Adapters::NoopAdaptor.new)
+    def initialize(adapter = Adapters::NoopAdapter.new)
       @adapter = adapter
     end
 
