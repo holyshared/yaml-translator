@@ -17,13 +17,14 @@ dir = File.dirname(__FILE__)
 adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
 translator = ::YamlTranslator::Translator.new(adapter)
 
-english_locale = ::YamlTranslator.load_file("#{dir}/en.yml")
-japanese_locale = english_locale.translate(translator, to: :ja)
+
+english_locale = translator.file("#{dir}/en.yml")
+japanese_locale = english_locale.to(:ja)
 
 p japanese_locale.to_s # convert to japanese locale yaml format
 p japanese_locale.save_to(dir) # Write a ja.yml
 
-german_locale = english_locale.translate(translator, to: :de)
+german_locale = english_locale.to(:de)
 
 p german_locale.to_s # convert to german locale yaml format
 p german_locale.save_to(dir) # Write a de.yml
