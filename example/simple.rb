@@ -4,8 +4,10 @@ require 'yaml'
 require 'yaml-translator'
 
 dir = File.dirname(__FILE__)
-adapter = ::YamlTranslator::Adapters::GoogleTranslateAdapter.new(ENV['GOOGLE_TRANSLATE_API_KEY'])
-translator = ::YamlTranslator::Translator.new(adapter)
+translator = ::YamlTranslator.create(
+  :google_translate,
+  api_key: ENV['GOOGLE_TRANSLATE_API_KEY']
+)
 
 english_locale = translator.file("#{dir}/en.yml")
 japanese_locale = english_locale.to(:ja)
