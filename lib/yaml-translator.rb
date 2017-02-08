@@ -15,5 +15,10 @@ module YamlTranslator
     def load_file(file)
       Locale.load_file(file)
     end
+
+    def create(name, options={})
+      adapter = Adapters.find_and_create(name, options)
+      Translator.new(adapter)
+    end
   end
 end
