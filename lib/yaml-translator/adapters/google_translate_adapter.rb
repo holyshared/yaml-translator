@@ -3,9 +3,6 @@ require 'easy_translate'
 module YamlTranslator
   module Adapters
     class GoogleTranslateAdapter < BaseAdapter
-      def initialize(options={})
-        @options = options
-      end
       def translate(values, options={})
         keys = []
         texts = []

@@ -2,9 +2,12 @@ require "yaml-translator/adapters"
 
 module YamlTranslator
   class Translator
-
     def initialize(adapter = Adapters::NoopAdapter.new)
       @adapter = adapter
+    end
+
+    def adapter_name
+      @adapter.name
     end
 
     # Translate target
