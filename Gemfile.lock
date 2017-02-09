@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yaml-translator (0.8.2)
+    yaml-translator (0.8.3)
       diff-lcs
       easy_translate
 
