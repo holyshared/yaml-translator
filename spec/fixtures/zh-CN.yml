@@ -1,0 +1,7 @@
+---
+zh-CN:
+  bar: bar
+  foo: foo
+  foo1:
+    foo1: foo1-1
+    foo2: foo1-2
