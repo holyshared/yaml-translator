@@ -5,7 +5,7 @@ module YamlTranslator
       @translator = translator
     end
     def to(lang)
-      @translator.translate(@locale, to: lang)
+      @locale.translate(@translator, to: lang)
     end
   end
 
