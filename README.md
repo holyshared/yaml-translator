@@ -48,6 +48,13 @@ diff_locale = translator.file("/path/to/before/en.yml").diff("/path/to/after/en.
 diff_locale.to(:ja).save
 ```
 
+translate into multiple languages
+
+```ruby
+diff_locale = translator.file("/path/to/before/en.yml").diff("/path/to/after/en.yml")
+diff_locale.all(%w(ja en)).each { |r| r.save }
+```
+
 ## Run the test
 
 	bundle install
