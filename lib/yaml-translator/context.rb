@@ -4,8 +4,13 @@ module YamlTranslator
       @locale = locale
       @translator = translator
     end
-    def to(lang)
-      @locale.translate(@translator, to: lang)
+
+    def to(target)
+      @locale.translate(@translator, to: target)
+    end
+
+    def all(targets)
+      targets.map { |target| @locale.translate(@translator, to: target) }
     end
   end
 
