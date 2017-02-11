@@ -69,10 +69,6 @@ module YamlTranslator
       save(dir)
     end
 
-#    def to_single_key_hash
-#      config.to_single_key
-#    end
-
     # Covert to a flatten hash
     def to_single_key_hash
       compact_of(to_h, KeyPath.new)
