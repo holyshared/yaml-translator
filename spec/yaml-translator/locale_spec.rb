@@ -13,7 +13,7 @@ describe YamlTranslator::Locale do
   describe '#load' do
     it 'should be load from string' do
       locale = YamlTranslator::Locale.load(lang_file_content)
-      expect(locale.lang).to eq('en')
+      expect(locale.lang).to eq(:en)
     end
   end
 
@@ -27,7 +27,7 @@ describe YamlTranslator::Locale do
     end
     it 'should be return flatten hash' do
       diff_locale = before_locale.diff(after_locale)
-      expect(diff_locale.lang).to eq('en')
+      expect(diff_locale.lang).to eq(:en)
       expect(diff_locale.to_single_key_hash).to eq(single_key_hash)
     end
   end
@@ -50,14 +50,14 @@ describe YamlTranslator::Locale do
     let(:merge_target_file) { File.join(File.dirname(__FILE__), '/../fixtures/merge_target.yml') }
     it 'should be merge to yaml file' do
       merged = locale.merge_to_file(merge_target_file)
-      expect(merged.values['en']['target']).to eq('bar')
+      expect(merged['en']['target']).to eq('bar')
     end
   end
 
   describe '#merge_to_s' do
     it 'should be merge to yaml formatted string' do
       merged = locale.merge_to_s("---\nen:\n  merge_to_s: ok?")
-      expect(merged.values['en']['merge_to_s']).to eq('ok?')
+      expect(merged['en']['merge_to_s']).to eq('ok?')
     end
   end
 

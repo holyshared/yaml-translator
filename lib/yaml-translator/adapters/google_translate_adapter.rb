@@ -3,6 +3,9 @@ require 'easy_translate'
 module YamlTranslator
   module Adapters
     class GoogleTranslateAdapter < BaseAdapter
+      # Translate for locale texts
+      # @param [Hash] locale texts of translate target
+      # @return [Hash] locale texts
       def translate(values, options={})
         keys = []
         texts = []

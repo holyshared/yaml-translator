@@ -7,7 +7,7 @@ describe YamlTranslator::Translator do
       it 'translate files' do
         result = translator.file(path).to(:ja)
         expect(result.lang).to eq(:ja)
-        expect(result.values).to eq(expected_locale.values)
+        expect(result.config).to eq(expected_locale.config)
       end
     end
     context 'when zh-CN' do
@@ -16,7 +16,7 @@ describe YamlTranslator::Translator do
       it 'translate files' do
         result = translator.file(path).to(:'zh-CN')
         expect(result.lang).to eq(:'zh-CN')
-        expect(result.values).to eq(expected_locale.values)
+        expect(result.config).to eq(expected_locale.config)
       end
     end
   end
@@ -28,7 +28,7 @@ describe YamlTranslator::Translator do
       it 'translate yaml string' do
         result = translator.string(yaml_source).to(:ja)
         expect(result.lang).to eq(:ja)
-        expect(result.values).to eq(expected_locale.values)
+        expect(result.config).to eq(expected_locale.config)
       end
     end
     context 'when zh-CN' do
@@ -37,7 +37,7 @@ describe YamlTranslator::Translator do
       it 'translate yaml string' do
         result = translator.string(yaml_source).to(:'zh-CN')
         expect(result.lang).to eq(:'zh-CN')
-        expect(result.values).to eq(expected_locale.values)
+        expect(result.config).to eq(expected_locale.config)
       end
     end
   end

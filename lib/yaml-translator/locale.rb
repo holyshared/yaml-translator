@@ -1,37 +1,50 @@
 require 'yaml'
+require 'ostruct'
 require 'diff/lcs'
 
 module YamlTranslator
-  class Locale
+  class Locale < OpenStruct
+    attr_reader :lang
 
-    attr_reader :lang, :values
+    class << self
+      def load(s)
+        self.new(YAML.load(s))
+      end
 
-    def initialize(values, lang)
-      @lang = lang
-      @values = values
+      def load_file(file)
+        load(File.open(file, &:read))
+      end
+    end
+
+    def initialize(config)
+      super(config)
+      @lang = config.keys.first.to_sym # FIXME check support language
     end
 
     def translate(translator, options={})
-      translator.translate(self, options)
+      result = {}
+      values = to_h
+      translated_values = translator.translate(compact_of(values[@lang]), options)
+      result[options[:to]] = tree_of(translated_values)
+      Locale.new(result)
     end
 
-    def diff(other)
+    def diff(other_locale)
       before_seq = to_single_key_hash.map { |k, v| "#{k}: #{v}" }
-      after_seq = other.to_single_key_hash.map { |k, v| "#{k}: #{v}" }
+      after_seq = other_locale.to_single_key_hash.map { |k, v| "#{k}: #{v}" }
       diffs = Diff::LCS.diff(before_seq, after_seq).flatten.map do |operation|
         type, position, element = *operation
         next if type == '-'
         key, text = *element.split(':')
         [key, text.strip]
       end
-      single_key_hash = Hash[diffs.compact]
-      Locale.new(single_key_hash.to_tree, lang)
+      Locale.new(tree_of(Hash[diffs.compact]))
     end
 
-    def merge(locale)
+    def merge(other_locale)
       s = to_single_key_hash
-      o = locale.to_single_key_hash
-      Locale.new(s.merge(o).to_tree, lang)
+      o = other_locale.to_single_key_hash
+      Locale.new(tree_of(s.merge(o)))
     end
 
     def merge_to(locale)
@@ -56,27 +69,59 @@ module YamlTranslator
       save(dir)
     end
 
+#    def to_single_key_hash
+#      config.to_single_key
+#    end
+
+    # Covert to a flatten hash
     def to_single_key_hash
-      values.to_single_key
+      compact_of(to_h, KeyPath.new)
     end
 
     def to_s
-      YAML.dump(values)
-    end
-
-    class << self
-      def load(s)
-        yaml = YAML.load(s)
-        lang = yaml.keys.first # FIXME check support language
-        self.new(yaml, lang)
-      end
-
-      def load_file(file)
-        load(File.open(file, &:read))
-      end
+      YAML.dump(tree_of(compact_of(to_h)))
     end
 
     private
+
+    # Covert to a flatten hash
+    def compact_of(values={}, path=KeyPath.new)
+      result = {}
+      values.each_with_index do |(i, v)|
+        path.move_to(i)
+        if v.is_a?(Hash)
+          result.merge!(compact_of(v, path))
+        else
+          result[path.to_s] = v
+        end
+        path.leave
+      end
+      result
+    end
+
+    # Returning the flattened structure to the tree structure
+    #
+    # @param [Hash] values flatten Hash
+    # @return [Hash] translated hash
+    def tree_of(values)
+      result = {}
+      current = result
+      values.each do |k, v|
+        keys = k.to_s.split('.')
+        last_key = keys.pop
+        keys.each do |ks|
+          current = if current.key?(ks)
+                      current[ks]
+                    else
+                      current[ks] = {}
+                      current[ks]
+                    end
+        end
+        current[last_key] = v
+        current = result
+      end
+      result
+    end
 
     def write_file(file_path)
       File.write(file_path, to_s)
