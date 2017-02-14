@@ -21,12 +21,13 @@ module YamlTranslator
       @lang = config.keys.first.to_sym # FIXME check support language
     end
 
+    def locale_texts
+      self[lang]
+    end
+
     def translate(translator, options={})
-      result = {}
-      values = to_h
-      translated_values = translator.translate(compact_of(values[@lang]), options)
-      result[options[:to]] = tree_of(translated_values)
-      Locale.new(result)
+      translated_values = translator.translate(compact_of(locale_texts), options)
+      Locale.new(Hash[*[options[:to], tree_of(translated_values)]])
     end
 
     def diff(other_locale)
@@ -75,7 +76,7 @@ module YamlTranslator
     end
 
     def to_s
-      YAML.dump(tree_of(compact_of(to_h)))
+      YAML.dump(Hash[*[lang.to_s, locale_texts]])
     end
 
     private
