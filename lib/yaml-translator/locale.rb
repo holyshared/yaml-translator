@@ -83,7 +83,6 @@ module YamlTranslator
     end
 
     def to_yaml(options={})
-      p options
       Hash[*[lang.to_s, locale_texts]].to_yaml(options)
     end
 
