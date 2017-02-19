@@ -1,4 +1,5 @@
 require 'yaml'
+require 'psych'
 require 'ostruct'
 require 'diff/lcs'
 
@@ -64,12 +65,12 @@ module YamlTranslator
       target_locale.merge(self)
     end
 
-    def save(dir=Dir.pwd)
-      write_file(File.join(dir, "#{lang}.yml"))
+    def save(dir=Dir.pwd, options={})
+      write_file(File.join(dir, "#{lang}.yml"), options)
     end
 
-    def save_to(dir)
-      save(dir)
+    def save_to(dir, options={})
+      save(dir, options)
     end
 
     # Covert to a flatten hash
@@ -78,7 +79,12 @@ module YamlTranslator
     end
 
     def to_s
-      YAML.dump(Hash[*[lang.to_s, locale_texts]])
+      to_yaml
+    end
+
+    def to_yaml(options={})
+      p options
+      Hash[*[lang.to_s, locale_texts]].to_yaml(options)
     end
 
     private
@@ -122,8 +128,8 @@ module YamlTranslator
       result
     end
 
-    def write_file(file_path)
-      File.write(file_path, to_s)
+    def write_file(file_path, options={})
+      File.write(file_path, to_yaml(options))
     end
   end
 end
