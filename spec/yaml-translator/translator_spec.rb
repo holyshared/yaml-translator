@@ -41,4 +41,15 @@ describe YamlTranslator::Translator do
       end
     end
   end
+  describe '#diff' do
+    let(:yaml_source) { yaml_contents(:en) }
+    context 'when diff nothing' do
+      context 'when ja' do
+        subject { translator.string(yaml_source).diff(yaml_source).to(:ja) }
+        it 'translate yaml string' do
+          expect(subject.lang).to eq(:ja)
+        end
+      end
+    end
+  end
 end
