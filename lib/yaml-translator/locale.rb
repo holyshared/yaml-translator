@@ -39,7 +39,9 @@ module YamlTranslator
         key, text = *element.split(':')
         [key, text.strip]
       end
-      Locale.new(tree_of(Hash[diffs.compact]))
+      tree_hash = tree_of(Hash[diffs.compact])
+      tree_hash[lang] = {} if tree_hash.empty?
+      Locale.new(tree_hash)
     end
 
     def merge(other_locale)
