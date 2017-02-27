@@ -67,9 +67,19 @@ describe YamlTranslator::Locale do
     end
   end
   describe '#save_to' do
-    before { locale.save_to(tmp_dir) }
-    it 'should be write a language file' do
-      expect(file_exist).to be true
+    context 'when default' do
+      before { locale.save_to(tmp_dir) }
+      it 'should be write a language file' do
+        expect(file_exist).to be true
+      end
+    end
+    context 'when with prefix option' do
+      let(:output_file) { File.join(tmp_dir, 'ns.en.yml') }
+      let(:file_exist) { File.exist?(output_file) }
+      before { locale.save_to(tmp_dir, prefix: 'ns.') }
+      it 'should be write a language file' do
+        expect(file_exist).to be true
+      end
     end
   end
 end

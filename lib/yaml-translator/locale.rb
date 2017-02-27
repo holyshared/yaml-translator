@@ -65,8 +65,14 @@ module YamlTranslator
       target_locale.merge(self)
     end
 
+    # Save the file
+    #
+    # @param dir [String] Directory path to save the file
+    # @param options [Hash] Options for saving
+    # @return int
     def save(dir=Dir.pwd, options={})
-      write_file(File.join(dir, "#{lang}.yml"), options)
+      prefix = options[:prefix] if options.key?(:prefix)
+      write_file(File.join(dir, "#{prefix}#{lang}.yml"), options)
     end
 
     def save_to(dir, options={})
