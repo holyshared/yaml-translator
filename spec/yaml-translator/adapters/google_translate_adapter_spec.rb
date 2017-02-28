@@ -21,7 +21,7 @@ describe YamlTranslator::Adapters::GoogleTranslateAdapter do
     context 'when empty values' do
       let(:null_values) { {} }
       before do
-        allow(EasyTranslate).to receive(:translate).and_return([])
+        allow(EasyTranslate).to receive(:translate).and_return(nil)
       end
       subject { adapter.translate(null_values, to: :ja) }
       it 'should be return empty' do
