@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'yaml'
 require 'yaml-translator'
 
-dir = File.dirname(__FILE__)
+dir = File.join(File.dirname(__FILE__), 'diff/some')
 translator = ::YamlTranslator.create(
   :google_translate,
   api_key: ENV['GOOGLE_TRANSLATE_API_KEY']
