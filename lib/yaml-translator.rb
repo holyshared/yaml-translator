@@ -7,7 +7,7 @@ require 'yaml-translator/adapters'
 
 module YamlTranslator
   class << self
-    def create(name, options={})
+    def create(name, options = {})
       adapter = Adapters.find_and_create(name, options)
       Translator.new(adapter)
     end

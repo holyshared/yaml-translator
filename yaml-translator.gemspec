@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = YamlTranslator::VERSION
   spec.authors       = ['Noritaka Horio']
   spec.email         = ['holy.shared.design@gmail.com']
-  spec.summary       = %q{Translate for the locales configuration file}
-  spec.description   = %q{Translate for the locales configuration file}
+  spec.summary       = 'Translate for the locales configuration file'
+  spec.description   = 'Translate for the locales configuration file'
   spec.homepage      = 'https://github.com/holyshared/yaml-translator'
   spec.license       = 'MIT'
 
@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov-console'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rspec-temp_dir'
+  spec.add_development_dependency 'onkcop'
 end

@@ -9,7 +9,7 @@ describe YamlTranslator::Adapters::GoogleTranslateAdapter do
         values
       end
       before do
-        allow(EasyTranslate).to receive(:translate).and_return(['a_a', 'a_b'])
+        allow(EasyTranslate).to receive(:translate).and_return(%w(a_a a_b))
       end
       subject { adapter.translate(some_values, to: :ja) }
       it 'should be return translate results' do

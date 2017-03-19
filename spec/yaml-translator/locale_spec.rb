@@ -22,7 +22,7 @@ describe YamlTranslator::Locale do
     let(:after_locale) { load_locale('diff/after/en') }
     let(:single_key_hash) do
       {
-        'en.foo1.foo3' => 'foo1-3'
+        'en.foo1.foo3' => 'foo1-3',
       }
     end
     it 'should be return flatten hash' do
@@ -36,9 +36,9 @@ describe YamlTranslator::Locale do
     let(:single_key_hash) do
       {
         'en.bar' => 'bar',
-        'en.foo'=> 'foo',
+        'en.foo' => 'foo',
         'en.foo1.foo1' => 'foo1-1',
-        'en.foo1.foo2' => 'foo1-2'
+        'en.foo1.foo2' => 'foo1-2',
       }
     end
     it 'should be return flatten hash' do
