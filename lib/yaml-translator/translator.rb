@@ -1,4 +1,4 @@
-require "yaml-translator/adapters"
+require 'yaml-translator/adapters'
 
 module YamlTranslator
   class Translator
@@ -14,7 +14,7 @@ module YamlTranslator
     #
     # @param [Hash] locale texts of translate target
     # @return [Hash] locale texts
-    def translate(locale_texts, options={})
+    def translate(locale_texts, options = {})
       @adapter.translate(locale_texts, options)
     end
 

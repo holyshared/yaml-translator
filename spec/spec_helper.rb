@@ -19,7 +19,7 @@ if ENV['COVERALLS_REPO_TOKEN']
   Coveralls.wear!
 else
   SimpleCov.formatters = [
-    SimpleCov::Formatter::Console
+    SimpleCov::Formatter::Console,
   ]
 end
 
